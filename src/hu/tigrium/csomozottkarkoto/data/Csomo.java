@@ -28,6 +28,10 @@ public abstract class Csomo {
         return ki;
     }
 
+    public Color getSzin() {
+        return szin;
+    }
+
     @Override
     public String toString() {
         if ( szin.equals(be[0].getSzin())) {

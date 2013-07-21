@@ -13,6 +13,7 @@ import hu.tigrium.csomozottkarkoto.data.ProsSor;
 import hu.tigrium.csomozottkarkoto.data.PtlanSor;
 import hu.tigrium.csomozottkarkoto.data.Sor;
 import hu.tigrium.csomozottkarkoto.data.Szal;
+import hu.tigrium.csomozottkarkoto.gui.Keret;
 import java.awt.Color;
 
 /**
@@ -25,23 +26,33 @@ public class CsomozottKarkoto {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        keretTest();
+//        test();
+    }
+    
+    private static void keretTest() {
+        Keret keret = new Keret(test());
+        keret.setVisible(true);
+    }
+    
+    private static Karkoto test() {
         Karkoto karkoto = new Karkoto(6);
         
         karkoto.addSzal(new Szal("B", Color.red));
         karkoto.addSzal(new Szal("B", Color.red));
-        karkoto.addSzal(new Szal("F", Color.black));
+        karkoto.addSzal(new Szal("F", Color.white));
         karkoto.addSzal(new Szal("S", Color.yellow));
         karkoto.addSzal(new Szal("S", Color.yellow));
-        karkoto.addSzal(new Szal("F", Color.black));
+        karkoto.addSzal(new Szal("F", Color.white));
         
-        System.out.println(szalakToString(karkoto.getSzalak()));
-        System.out.println("init:");
+//        System.out.println(szalakToString(karkoto.getSzalak()));
+//        System.out.println("init:");
         karkoto.init();
-        System.out.println(szalakToString(karkoto.getSzalak()));
-//        System.out.println(karkoto);
-        System.out.println();
+//        System.out.println(szalakToString(karkoto.getSzalak()));
+////        System.out.println(karkoto);
+//        System.out.println();
         
-        System.out.println("add sor");
+//        System.out.println("add sor");
         karkoto.addSor(getSor(karkoto, PlusPlus.class, PlusMinus.class, MinusPlus.class));
         karkoto.addSor(getSor(karkoto, PlusPlus.class, PlusPlus.class));
         karkoto.addSor(getSor(karkoto, PlusPlus.class, PlusPlus.class, MinusPlus.class));
@@ -50,11 +61,12 @@ public class CsomozottKarkoto {
         karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
         karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
 
-        System.out.println("\nKarkötő: ");
-        System.out.println(karkoto);
-        System.out.println(szalakToString(karkoto.getSzalak()));
+//        System.out.println("\nKarkötő: ");
+//        System.out.println(karkoto);
+//        System.out.println(szalakToString(karkoto.getSzalak()));
+        
+        return karkoto;
     }
-    
     
     private static String szalakToString(Szal[] szalak) {
         StringBuilder sb = new StringBuilder();

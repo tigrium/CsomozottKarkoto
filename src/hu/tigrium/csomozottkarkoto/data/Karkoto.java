@@ -12,6 +12,7 @@ import java.util.ArrayList;
  */
 public class Karkoto {
     private int n;
+    private Szal[] kezdoSzalak;
     private Szal[] szalak;
     private ArrayList<Sor> sorok;
 
@@ -27,6 +28,7 @@ public class Karkoto {
     public Karkoto(Szal[] szalak) {
         if ( szalak.length % 2 == 0 ) {
             this.szalak = szalak;
+            kezdoSzalak = szalak;
             n = szalak.length;
         } else {
             throw new RuntimeException("Páros számú szálnak kell lenni.");
@@ -37,6 +39,7 @@ public class Karkoto {
         for (int i = 0; i < n; i++) {
             if ( szalak[i] == null ) {
                 szalak[i] = szal;
+                kezdoSzalak = szalak;
                 return;
             }
         }
@@ -63,6 +66,10 @@ public class Karkoto {
 
     public ArrayList<Sor> getSorok() {
         return sorok;
+    }
+
+    public Szal[] getKezdoSzalak() {
+        return kezdoSzalak;
     }
 
     @Override
