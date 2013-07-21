@@ -14,29 +14,54 @@ import hu.tigrium.csomozottkarkoto.data.PtlanSor;
 import hu.tigrium.csomozottkarkoto.data.Sor;
 import hu.tigrium.csomozottkarkoto.data.Szal;
 import hu.tigrium.csomozottkarkoto.gui.Keret;
+import hu.tigrium.csomozottkarkoto.gui.SettingsPanel;
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  * @author Kata
  */
 public class CsomozottKarkoto {
+    private static Karkoto karkoto;
+    private static Keret keret;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CsomozottKarkoto.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(CsomozottKarkoto.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(CsomozottKarkoto.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(CsomozottKarkoto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
         keretTest();
 //        test();
     }
     
     private static void keretTest() {
-        Keret keret = new Keret(test());
+        test2();
+        keret = new Keret();
         keret.setVisible(true);
     }
     
-    private static Karkoto test() {
-        Karkoto karkoto = new Karkoto(6);
+    private static void test2() {
+        karkoto = new Karkoto(6);
+        karkoto.init();
+    }
+    
+    private static void test() {
+        karkoto = new Karkoto(6);
         
         karkoto.addSzal(new Szal("B", Color.red));
         karkoto.addSzal(new Szal("B", Color.red));
@@ -60,12 +85,36 @@ public class CsomozottKarkoto {
         karkoto.addSor(getSor(karkoto, PlusMinus.class, PlusMinus.class, PlusMinus.class));
         karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
         karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
+        
+        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, PlusPlus.class));
+        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+        karkoto.addSor(getSor(karkoto, PlusPlus.class, PlusMinus.class, MinusMinus.class));
+        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+        karkoto.addSor(getSor(karkoto, PlusPlus.class, MinusPlus.class, PlusPlus.class));
+        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusMinus.class, MinusPlus.class));
+        karkoto.addSor(getSor(karkoto, MinusMinus.class, PlusPlus.class));
+        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
+        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+        karkoto.addSor(getSor(karkoto, PlusPlus.class, PlusMinus.class, MinusMinus.class));
+        karkoto.addSor(getSor(karkoto, MinusMinus.class, PlusPlus.class));
+        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
+        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+        karkoto.addSor(getSor(karkoto, PlusPlus.class, MinusMinus.class, MinusMinus.class));
+        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
+        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+        karkoto.addSor(getSor(karkoto, MinusPlus.class, PlusPlus.class, PlusPlus.class));
+        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusPlus.class, MinusPlus.class));
+        karkoto.addSor(getSor(karkoto, PlusPlus.class, MinusMinus.class));
+        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
 
 //        System.out.println("\nKarkötő: ");
 //        System.out.println(karkoto);
 //        System.out.println(szalakToString(karkoto.getSzalak()));
         
-        return karkoto;
     }
     
     private static String szalakToString(Szal[] szalak) {
@@ -95,5 +144,26 @@ public class CsomozottKarkoto {
         }
         
         return s;
+    }
+
+    public static Karkoto getKarkoto() {
+        if (karkoto == null) {
+            karkoto = new Karkoto(6);
+            karkoto.init();
+        }
+        return karkoto;
+    }
+
+    public static void setKarkoto(Karkoto karkoto) {
+        karkoto.init();
+        CsomozottKarkoto.karkoto = karkoto;
+    }
+
+    public static Keret getKeret() {
+        return keret;
+    }
+
+    public static void setKeret(Keret keret) {
+        CsomozottKarkoto.keret = keret;
     }
 }

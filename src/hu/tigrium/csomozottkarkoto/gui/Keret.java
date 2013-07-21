@@ -4,38 +4,53 @@
  */
 package hu.tigrium.csomozottkarkoto.gui;
 
+import hu.tigrium.csomozottkarkoto.CsomozottKarkoto;
 import hu.tigrium.csomozottkarkoto.data.Karkoto;
 import hu.tigrium.csomozottkarkoto.data.Szal;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.ScrollPane;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 /**
  *
  * @author Kata
  */
 public class Keret extends javax.swing.JFrame {
-    private HaloPanel panel;
+//    private HaloPanel panel;
+//    private JScrollPane scroll;
     /**
      * Creates new form Keret
      */
-    public Keret(Karkoto karkoto) {
+    public Keret() {
         initComponents();
 //        Szal[] szalak = new Szal[]{new Szal("B", Color.red), new Szal("B", Color.red),
 //                new Szal("F", Color.black), new Szal("S", Color.yellow), 
 //                new Szal("S", Color.yellow), new Szal("F", Color.black)};
+        Karkoto karkoto = CsomozottKarkoto.getKarkoto();
         Szal[] szalak = karkoto.getKezdoSzalak();
-        panel = new HaloPanel(szalak, 20);
-        panel.setKarkoto(karkoto);
-        add(panel);
-        pack();
+//        panel = new HaloPanel(szalak);
+//        panel.setKarkoto(karkoto);
+//        scroll = new JScrollPane(panel);
+//        scroll.setPreferredSize(panel.getPreferredSize());
+//        add(panel, BorderLayout.CENTER);
+        setPreferredSize(new Dimension(300, 400));
+        setLocationRelativeTo(null);
+        
+//        JFrame frame = new JFrame();
+//        frame.add(new JScrollPane(panel), BorderLayout.CENTER);
+//        frame.setVisible(true);
     }
 
-    public HaloPanel getPanel() {
-        return panel;
-    }
-
-    public void setPanel(HaloPanel panel) {
-        this.panel = panel;
-    }
+//    public HaloPanel getPanel() {
+//        return panel;
+//    }
+//
+//    public void setPanel(HaloPanel panel) {
+//        this.panel = panel;
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,22 +61,56 @@ public class Keret extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        haloPanel2 = new hu.tigrium.csomozottkarkoto.gui.HaloPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        settingsPanel1 = new hu.tigrium.csomozottkarkoto.gui.SettingsPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jScrollPane2.setBorder(null);
+
+        javax.swing.GroupLayout haloPanel2Layout = new javax.swing.GroupLayout(haloPanel2);
+        haloPanel2.setLayout(haloPanel2Layout);
+        haloPanel2Layout.setHorizontalGroup(
+            haloPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 348, Short.MAX_VALUE)
+        );
+        haloPanel2Layout.setVerticalGroup(
+            haloPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 358, Short.MAX_VALUE)
+        );
+
+        jScrollPane2.setViewportView(haloPanel2);
+
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(100, 23));
+        jScrollPane1.setName(""); // NOI18N
+        jScrollPane1.setViewportView(settingsPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private hu.tigrium.csomozottkarkoto.gui.HaloPanel haloPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private hu.tigrium.csomozottkarkoto.gui.SettingsPanel settingsPanel1;
     // End of variables declaration//GEN-END:variables
 }

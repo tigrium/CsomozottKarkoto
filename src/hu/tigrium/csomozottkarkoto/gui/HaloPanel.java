@@ -4,6 +4,7 @@
  */
 package hu.tigrium.csomozottkarkoto.gui;
 
+import hu.tigrium.csomozottkarkoto.CsomozottKarkoto;
 import hu.tigrium.csomozottkarkoto.data.Csomo;
 import hu.tigrium.csomozottkarkoto.data.Karkoto;
 import hu.tigrium.csomozottkarkoto.data.MinusMinus;
@@ -13,6 +14,7 @@ import hu.tigrium.csomozottkarkoto.data.PlusPlus;
 import hu.tigrium.csomozottkarkoto.data.Sor;
 import hu.tigrium.csomozottkarkoto.data.Szal;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
@@ -23,32 +25,35 @@ import javax.swing.JPanel;
  */
 public class HaloPanel extends JPanel {
     private static final int keret = 40;
-    private static final int tav = 10;
-    private int w, h;
-    private Szal[] szalak;
-    private Karkoto karkoto;
+    private static final int tav = 14;
 
-    public HaloPanel(Szal[] szalak, int h) {
-        w = szalak.length;
-        this.szalak = szalak;
-        this.h = h;
-        setSize(w * tav + 2 * keret, h * tav + 2 * keret);
-        karkoto = new Karkoto(szalak);
+    public HaloPanel() {
+        setSize(getW() * tav + 2 * keret, getH() * tav + 2 * keret);
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        Karkoto karkoto = CsomozottKarkoto.getKarkoto();
+        Szal[] szalak = karkoto.getSzalak();
+        
+        if (karkoto != null && karkoto.getSorok() != null && karkoto.getSzalak() != null) {
+            int hossz = karkoto.getSorok().size();
+            int szelesseg = karkoto.getSzalak().length;
+            setSize(2 * keret + tav * szelesseg, 2 * keret + tav * hossz);
+            setPreferredSize(new Dimension(2 * keret + tav * szelesseg, 2 * keret + tav * hossz));
+        }
+        
         Color c = g.getColor();
         
-        for (int i = 0; i < w; i++) {
+        for (int i = 0; i < getW(); i++) {
             g.setColor(szalak[i].getSzin());
             g.drawLine(keret + i * tav, keret - 2 * tav, keret + i * tav, keret - tav);
             g.setColor(c);
-            g.drawLine(keret + i * tav, keret, keret + i * tav, keret + h * tav);
+            g.drawLine(keret + i * tav, keret, keret + i * tav, keret + (getH() + 1 ) * tav);
         }
-        for (int i = 0; i <= h; i++) {
-            g.drawLine(keret, keret + i * tav, keret + (w-1) * tav, keret + i * tav);
+        for (int i = 0; i <= getH(); i++) {
+            g.drawLine(keret, keret + i * tav, keret + (getW()-1) * tav, keret + i * tav);
         }
         
         if ( karkoto.getSorok() != null ) {
@@ -94,12 +99,17 @@ public class HaloPanel extends JPanel {
         
         return img;
     }
-
-    public Karkoto getKarkoto() {
-        return karkoto;
+    
+    private int getH() {
+        Karkoto karkoto = CsomozottKarkoto.getKarkoto();
+        if (karkoto != null && karkoto.getSorok() != null) {
+            return karkoto.getSorok().size();
+        } else {
+            return 0;
+        }
     }
-
-    public void setKarkoto(Karkoto karkoto) {
-        this.karkoto = karkoto;
+    
+    private int getW() {
+        return CsomozottKarkoto.getKarkoto().getSzalak().length;
     }
 }
