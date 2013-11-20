@@ -20,6 +20,7 @@ public abstract class Sor {
 
     public Sor(Szal[] be) {
         this.be = be;
+        ki = new Szal[be.length];
         init();
     }
     
@@ -51,7 +52,9 @@ public abstract class Sor {
                 ki[2*i + 1 + kimaradoSzal] = csomok[i].getKi()[1];
             }
         }
-        
+        for (int i = 0; i < be.length; i++) {
+            if (ki[i] == null) ki[i] = be[i];
+        }
     }
 
     public Szal[] getBe() {
@@ -59,14 +62,16 @@ public abstract class Sor {
     }
 
     public Szal[] getKi() {
-        if ( ki == null ) {
-            general();
-        }
+        general();
         return ki;
     }
 
     public Csomo[] getCsomok() {
         return csomok;
+    }
+
+    public int getKimaradoSzal() {
+        return kimaradoSzal;
     }
 
     @Override

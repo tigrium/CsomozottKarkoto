@@ -5,7 +5,6 @@
 package hu.tigrium.csomozottkarkoto.data;
 
 import java.awt.Color;
-import java.util.Objects;
 
 /**
  *

@@ -11,6 +11,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.ScrollPane;
+import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
@@ -29,28 +30,17 @@ public class Keret extends javax.swing.JFrame {
 //        Szal[] szalak = new Szal[]{new Szal("B", Color.red), new Szal("B", Color.red),
 //                new Szal("F", Color.black), new Szal("S", Color.yellow), 
 //                new Szal("S", Color.yellow), new Szal("F", Color.black)};
-        Karkoto karkoto = CsomozottKarkoto.getKarkoto();
-        Szal[] szalak = karkoto.getKezdoSzalak();
-//        panel = new HaloPanel(szalak);
-//        panel.setKarkoto(karkoto);
-//        scroll = new JScrollPane(panel);
-//        scroll.setPreferredSize(panel.getPreferredSize());
-//        add(panel, BorderLayout.CENTER);
         setPreferredSize(new Dimension(300, 400));
         setLocationRelativeTo(null);
-        
-//        JFrame frame = new JFrame();
-//        frame.add(new JScrollPane(panel), BorderLayout.CENTER);
-//        frame.setVisible(true);
     }
-
-//    public HaloPanel getPanel() {
-//        return panel;
-//    }
-//
-//    public void setPanel(HaloPanel panel) {
-//        this.panel = panel;
-//    }
+    
+    public void repaintKarkoto() {
+        haloPanel2.repaint();
+    }
+    
+    public void updateSettings() {
+        settingsPanel1.update();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,10 +51,15 @@ public class Keret extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane2 = new javax.swing.JScrollPane();
         haloPanel2 = new hu.tigrium.csomozottkarkoto.gui.HaloPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         settingsPanel1 = new hu.tigrium.csomozottkarkoto.gui.SettingsPanel();
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        paros = new javax.swing.JRadioButton();
+        paratlan = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,11 +69,11 @@ public class Keret extends javax.swing.JFrame {
         haloPanel2.setLayout(haloPanel2Layout);
         haloPanel2Layout.setHorizontalGroup(
             haloPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 348, Short.MAX_VALUE)
+            .addGap(0, 362, Short.MAX_VALUE)
         );
         haloPanel2Layout.setVerticalGroup(
             haloPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 358, Short.MAX_VALUE)
+            .addGap(0, 350, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(haloPanel2);
@@ -88,29 +83,74 @@ public class Keret extends javax.swing.JFrame {
         jScrollPane1.setName(""); // NOI18N
         jScrollPane1.setViewportView(settingsPanel1);
 
+        jButton1.setText("Új sor");
+        jButton1.setFocusPainted(false);
+
+        jLabel1.setText("Az első sor");
+
+        buttonGroup1.add(paros);
+        paros.setText("páros");
+        paros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                parosActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(paratlan);
+        paratlan.setSelected(true);
+        paratlan.setText("páratlan");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(paros)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(paratlan)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel1)
+                    .addComponent(paros)
+                    .addComponent(paratlan))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void parosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parosActionPerformed
+        CsomozottKarkoto.getKarkoto().setParos(paros.isSelected());
+    }//GEN-LAST:event_parosActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private hu.tigrium.csomozottkarkoto.gui.HaloPanel haloPanel2;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JRadioButton paratlan;
+    private javax.swing.JRadioButton paros;
     private hu.tigrium.csomozottkarkoto.gui.SettingsPanel settingsPanel1;
     // End of variables declaration//GEN-END:variables
 }

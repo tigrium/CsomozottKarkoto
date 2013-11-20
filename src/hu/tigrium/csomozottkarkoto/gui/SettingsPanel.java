@@ -7,38 +7,77 @@ package hu.tigrium.csomozottkarkoto.gui;
 import hu.tigrium.csomozottkarkoto.CsomozottKarkoto;
 import hu.tigrium.csomozottkarkoto.data.Karkoto;
 import hu.tigrium.csomozottkarkoto.data.Szal;
-import javax.swing.JSpinner;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.EventListener;
+import java.util.List;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
  * @author Kata
  */
 public class SettingsPanel extends javax.swing.JPanel {
+    private List<SzalSzin> szalszin;
     /**
      * Creates new form SettingsPanel
      */
     public SettingsPanel() {
         initComponents();
-        SpinnerModel model = new SpinnerNumberModel(CsomozottKarkoto.getKarkoto().getSzalak().length, 4, 20, 2);
+        szalszin = new ArrayList<SzalSzin>();
+        SpinnerModel model = new SpinnerNumberModel(CsomozottKarkoto.getKarkoto().getSzalak().length, 4, 20, 1);
         szalakSzama.setModel(model);
         szinek();
+        
+//        szalakSzama.addChangeListener(new ChangeListener() {
+//            @Override
+//            public void stateChanged(ChangeEvent e) {
+//                CsomozottKarkoto.setKarkoto(new Karkoto((int)szalakSzama.getValue()));
+//                CsomozottKarkoto.getKeret().repaint();
+//                szinek();
+//            }
+//        });
     }
     
     private void szinek() {
-        System.out.println(CsomozottKarkoto.getKarkoto().getSzalak().length);
-        for (Szal szal : CsomozottKarkoto.getKarkoto().getSzalak()) {
-            szinek.add(new SzalSzin(szal.getSzin()));
+        for (SzalSzin sz : szalszin) {
+            szinek.remove(sz);
         }
+        
+        szalszin.clear();
+        
+        for (int i = 0; i < getSzalakSzama(); i++) {
+            szalszin.add(new SzalSzin(CsomozottKarkoto.getKarkoto().getSzal(i).getSzin(), i));
+        }
+        
+        for (SzalSzin sz : szalszin) {
+            szinek.add(sz);
+        }
+        
+        validate();
         repaint();
     }
 
-    public int getSzalakSzama() {
+    private int getSzalakSzama() {
         return (int) szalakSzama.getValue();
     }
     
-
+    protected void setSzalSzin() {
+        for (int i = 0; i < szalszin.size();i++) {
+            CsomozottKarkoto.getKarkoto().getSzalak()[i].setSzin(szalszin.get(i).getSzin());
+        }
+    }
+    
+    public void update() {
+        szalakSzama.setValue(CsomozottKarkoto.getKarkoto().getSzalak().length);
+        szinek();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,7 +118,7 @@ public class SettingsPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scroll)
+                    .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -100,7 +139,7 @@ public class SettingsPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -123,10 +162,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void szalakSzamaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_szalakSzamaStateChanged
-        CsomozottKarkoto.setKarkoto(new Karkoto((int)szalakSzama.getValue()));
-        CsomozottKarkoto.getKeret().repaint();
-        szinek.removeAll();
-        szinek();
+        
     }//GEN-LAST:event_szalakSzamaStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

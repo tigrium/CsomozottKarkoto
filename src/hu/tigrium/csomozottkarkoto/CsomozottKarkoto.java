@@ -9,13 +9,14 @@ import hu.tigrium.csomozottkarkoto.data.MinusMinus;
 import hu.tigrium.csomozottkarkoto.data.MinusPlus;
 import hu.tigrium.csomozottkarkoto.data.PlusMinus;
 import hu.tigrium.csomozottkarkoto.data.PlusPlus;
-import hu.tigrium.csomozottkarkoto.data.ProsSor;
 import hu.tigrium.csomozottkarkoto.data.PtlanSor;
+import hu.tigrium.csomozottkarkoto.data.ProsSor;
 import hu.tigrium.csomozottkarkoto.data.Sor;
 import hu.tigrium.csomozottkarkoto.data.Szal;
 import hu.tigrium.csomozottkarkoto.gui.Keret;
 import hu.tigrium.csomozottkarkoto.gui.SettingsPanel;
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -44,20 +45,19 @@ public class CsomozottKarkoto {
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(CsomozottKarkoto.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
-        keretTest();
-//        test();
+        
+        init();
+        displayKeret();
+        test();
     }
     
-    private static void keretTest() {
-        test2();
+    private static void init() {
+        setKarkoto(new Karkoto(11));
+    }
+    
+    private static void displayKeret() {
         keret = new Keret();
         keret.setVisible(true);
-    }
-    
-    private static void test2() {
-        karkoto = new Karkoto(6);
-        karkoto.init();
     }
     
     private static void test() {
@@ -157,7 +157,21 @@ public class CsomozottKarkoto {
     public static void setKarkoto(Karkoto karkoto) {
         karkoto.init();
         CsomozottKarkoto.karkoto = karkoto;
+        if (keret != null) {
+            repaintKarkoto();
+            keret.updateSettings();
+        }
     }
+    
+    public static void repaintKarkoto() {
+        keret.repaintKarkoto();
+    }
+    
+//    public static void repaintKeret() {
+//        if (keret != null) {
+//            keret.repaint();
+//        }
+//    }
 
     public static Keret getKeret() {
         return keret;

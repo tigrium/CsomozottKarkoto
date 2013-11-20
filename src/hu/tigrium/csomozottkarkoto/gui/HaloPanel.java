@@ -16,6 +16,9 @@ import hu.tigrium.csomozottkarkoto.data.Szal;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
@@ -29,11 +32,12 @@ public class HaloPanel extends JPanel {
 
     public HaloPanel() {
         setSize(getW() * tav + 2 * keret, getH() * tav + 2 * keret);
+        addMouseListener(new MouseListener());
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         Karkoto karkoto = CsomozottKarkoto.getKarkoto();
         Szal[] szalak = karkoto.getSzalak();
         
@@ -73,6 +77,12 @@ public class HaloPanel extends JPanel {
         }
     }
     
+//    @Override
+//    public void paint(Graphics g) {
+//        super.paint(g);
+//        
+//    }
+    
     private static BufferedImage getCsomoRajz(Csomo csomo) {
         BufferedImage img = new BufferedImage(tav, tav, BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.getGraphics();
@@ -111,5 +121,39 @@ public class HaloPanel extends JPanel {
     
     private int getW() {
         return CsomozottKarkoto.getKarkoto().getSzalak().length;
+    }
+    
+    
+    
+    private class MouseListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            System.out.println(e.getX() + "x" + e.getY());
+            getPozicio(e.getPoint());
+        }
+        
+    }
+    
+    private CsomoPozicio getPozicio(Point p) {
+        return new CsomoPozicio(p.x, p.y);
+    }
+    
+    private class CsomoPozicio {
+        int sor;
+        int csomo;
+        
+        public CsomoPozicio(int x, int y) {
+            sor = (y - keret - 1) / tav;
+            
+            System.out.println("sor: " + sor);
+            
+            int negyzet = (x - keret - 1) / tav;
+            int kimarado = CsomozottKarkoto.getKarkoto().getSor(sor).getKimaradoSzal();
+            
+            csomo = (negyzet - kimarado + 1) / 2;
+            
+            System.out.println("csomo: " + negyzet);
+        }
     }
 }

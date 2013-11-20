@@ -6,6 +6,7 @@ package hu.tigrium.csomozottkarkoto.data;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -16,24 +17,25 @@ public class Karkoto {
     private Szal[] kezdoSzalak;
     private Szal[] szalak;
     private ArrayList<Sor> sorok;
+    private boolean paros;  // Első sor páros, vagyis rajzolásnál az első négyzet üres
 
     public Karkoto(int n) {
-        if ( n % 2 == 0 ) {
+//        if ( n % 2 == 0 ) {
             this.n = n;
             szalak = new Szal[n];
-        } else {
-            throw new RuntimeException("Páros számú szálnak kell lenni.");
-        }
+//        } else {
+//            throw new RuntimeException("Páros számú szálnak kell lenni.");
+//        }
     }
 
     public Karkoto(Szal[] szalak) {
-        if ( szalak.length % 2 == 0 ) {
+//        if ( szalak.length % 2 == 0 ) {
             this.szalak = szalak;
             kezdoSzalak = szalak;
             n = szalak.length;
-        } else {
-            throw new RuntimeException("Páros számú szálnak kell lenni.");
-        }
+//        } else {
+//            throw new RuntimeException("Páros számú szálnak kell lenni.");
+//        }
     }
     
     public void addSzal(Szal szal) {
@@ -60,16 +62,11 @@ public class Karkoto {
         
         for (int i = 0; i < n; i++) {
             if ( szalak[i] == null ) {
-                szalak[i] = new Szal("", new Color(0,0,0,0));
+                szalak[i] = new Szal(i+"", new Color(0,0,0,0));
             }
         }
         
         kezdoSzalak = szalak;
-//        Sor elso = new ProsSor(szalak);
-//        for (int i = 0; i + 1 < n; i += 2) {
-//            elso.addCsomo(i/2, UresCsomo.class);
-//        }
-//        addSor(elso);
     }
     
     public void addSor(Sor sor) {
@@ -77,6 +74,19 @@ public class Karkoto {
         szalak = sor.getKi();
     }
 
+    public void addUresSor() {
+        Sor ures;
+        if (paros) {
+            ures = new ProsSor(szalak);
+        } else {
+            ures = new PtlanSor(szalak);
+        }
+        for (int i = ures.kimaradoSzal; i + 1 < n; i += 2) {
+            ures.addCsomo(i/2, UresCsomo.class);
+        }
+        addSor(ures);
+    }
+    
     public Szal[] getSzalak() {
         return szalak;
     }
@@ -84,16 +94,33 @@ public class Karkoto {
     public ArrayList<Sor> getSorok() {
         return sorok;
     }
+    
+    public Sor getSor(int index) {
+        return getSorok().get(index);
+    }
 
     public Szal[] getKezdoSzalak() {
         return kezdoSzalak;
     }
     
-    public void setSzalak(int szalak) {
-        n = szalak;
-        kezdoSzalak = new Szal[szalak];
-        this.szalak = new Szal[szalak];
-        sorok = new ArrayList<>();
+//    public void setSzalak(int szalak) {
+//        n = szalak;
+//        kezdoSzalak = new Szal[szalak];
+//        this.szalak = new Szal[szalak];
+//        sorok = new ArrayList<>();
+//    }
+    
+    public Szal getSzal(int index) {
+        System.out.println(Arrays.toString(getSzalak()));
+        return getSzalak()[index];
+    }
+
+    public boolean isParos() {
+        return paros;
+    }
+
+    public void setParos(boolean paros) {
+        this.paros = paros;
     }
 
     @Override

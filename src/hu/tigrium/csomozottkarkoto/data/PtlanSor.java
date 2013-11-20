@@ -17,14 +17,11 @@ public class PtlanSor extends Sor {
 
     @Override
     void init() {
-        csomok = new Csomo[(be.length - 2) / 2];
-    }
-
-    @Override
-    public void general() {
-        super.general();
+        csomok = new Csomo[(be.length - 1) / 2];
         ki[0] = be[0];
-        ki[be.length-1] = be[be.length-1];
+        if (be.length % 2 == 0) {
+            ki[be.length-1] = be[be.length-1];
+        }
     }
     
 }
