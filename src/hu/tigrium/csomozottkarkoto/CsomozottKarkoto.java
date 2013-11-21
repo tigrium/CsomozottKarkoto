@@ -52,7 +52,7 @@ public class CsomozottKarkoto {
     }
     
     private static void init() {
-        setKarkoto(new Karkoto(11));
+        setKarkoto(new Karkoto(8));
     }
     
     private static void displayKeret() {
@@ -61,14 +61,14 @@ public class CsomozottKarkoto {
     }
     
     private static void test() {
-        karkoto = new Karkoto(6);
+        Karkoto karkoto = new Karkoto(6);
         
-        karkoto.addSzal(new Szal("B", Color.red));
-        karkoto.addSzal(new Szal("B", Color.red));
-        karkoto.addSzal(new Szal("F", Color.white));
-        karkoto.addSzal(new Szal("S", Color.yellow));
-        karkoto.addSzal(new Szal("S", Color.yellow));
-        karkoto.addSzal(new Szal("F", Color.white));
+        karkoto.addSzal(new Szal("1", Color.red));
+        karkoto.addSzal(new Szal("2", Color.red));
+        karkoto.addSzal(new Szal("3", Color.white));
+        karkoto.addSzal(new Szal("4", Color.yellow));
+        karkoto.addSzal(new Szal("5", Color.yellow));
+        karkoto.addSzal(new Szal("6", Color.white));
         
 //        System.out.println(szalakToString(karkoto.getSzalak()));
 //        System.out.println("init:");
@@ -86,30 +86,32 @@ public class CsomozottKarkoto {
         karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
         karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
         
-        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
-        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, PlusPlus.class));
-        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
-        karkoto.addSor(getSor(karkoto, PlusPlus.class, PlusMinus.class, MinusMinus.class));
-        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
-        karkoto.addSor(getSor(karkoto, PlusPlus.class, MinusPlus.class, PlusPlus.class));
-        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
-        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusMinus.class, MinusPlus.class));
-        karkoto.addSor(getSor(karkoto, MinusMinus.class, PlusPlus.class));
-        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
-        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
-        karkoto.addSor(getSor(karkoto, PlusPlus.class, PlusMinus.class, MinusMinus.class));
-        karkoto.addSor(getSor(karkoto, MinusMinus.class, PlusPlus.class));
-        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
-        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
-        karkoto.addSor(getSor(karkoto, PlusPlus.class, MinusMinus.class, MinusMinus.class));
-        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
-        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
-        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
-        karkoto.addSor(getSor(karkoto, MinusPlus.class, PlusPlus.class, PlusPlus.class));
-        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
-        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusPlus.class, MinusPlus.class));
-        karkoto.addSor(getSor(karkoto, PlusPlus.class, MinusMinus.class));
-        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
+//        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+//        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, PlusPlus.class));
+//        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+//        karkoto.addSor(getSor(karkoto, PlusPlus.class, PlusMinus.class, MinusMinus.class));
+//        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+//        karkoto.addSor(getSor(karkoto, PlusPlus.class, MinusPlus.class, PlusPlus.class));
+//        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+//        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusMinus.class, MinusPlus.class));
+//        karkoto.addSor(getSor(karkoto, MinusMinus.class, PlusPlus.class));
+//        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
+//        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+//        karkoto.addSor(getSor(karkoto, PlusPlus.class, PlusMinus.class, MinusMinus.class));
+//        karkoto.addSor(getSor(karkoto, MinusMinus.class, PlusPlus.class));
+//        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
+//        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+//        karkoto.addSor(getSor(karkoto, PlusPlus.class, MinusMinus.class, MinusMinus.class));
+//        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+//        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
+//        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+//        karkoto.addSor(getSor(karkoto, MinusPlus.class, PlusPlus.class, PlusPlus.class));
+//        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusMinus.class));
+//        karkoto.addSor(getSor(karkoto, MinusMinus.class, MinusPlus.class, MinusPlus.class));
+//        karkoto.addSor(getSor(karkoto, PlusPlus.class, MinusMinus.class));
+//        karkoto.addSor(getSor(karkoto, MinusPlus.class, MinusPlus.class, MinusPlus.class));
+        
+        setKarkoto(karkoto);
 
 //        System.out.println("\nKarkötő: ");
 //        System.out.println(karkoto);

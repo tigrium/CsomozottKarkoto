@@ -6,8 +6,6 @@ package hu.tigrium.csomozottkarkoto.gui;
 
 import hu.tigrium.csomozottkarkoto.CsomozottKarkoto;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JColorChooser;
 
 /**
@@ -86,9 +84,8 @@ public class SzalSzin extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(modosit)
-                .addComponent(jLabel1))
+            .addComponent(modosit)
+            .addComponent(jLabel1)
             .addComponent(szinminta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -97,7 +94,7 @@ public class SzalSzin extends javax.swing.JPanel {
         Color color = JColorChooser.showDialog(this, "Szál szín", szinminta.getBackground());
         if (color != null) {
             szinminta.setBackground(color);
-            CsomozottKarkoto.getKarkoto().getSzal(index).setSzin(color);
+            CsomozottKarkoto.getKarkoto().setSzalSzin(index, color);
             CsomozottKarkoto.repaintKarkoto();
         }
     }//GEN-LAST:event_modositActionPerformed

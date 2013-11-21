@@ -12,7 +12,7 @@ import hu.tigrium.csomozottkarkoto.data.MinusPlus;
 import hu.tigrium.csomozottkarkoto.data.PlusMinus;
 import hu.tigrium.csomozottkarkoto.data.PlusPlus;
 import hu.tigrium.csomozottkarkoto.data.Sor;
-import hu.tigrium.csomozottkarkoto.data.Szal;
+import hu.tigrium.csomozottkarkoto.data.UresCsomo;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -39,8 +39,8 @@ public class HaloPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Karkoto karkoto = CsomozottKarkoto.getKarkoto();
-        Szal[] szalak = karkoto.getSzalak();
         
+        // méret beállítása
         if (karkoto != null && karkoto.getSorok() != null && karkoto.getSzalak() != null) {
             int hossz = karkoto.getSorok().size();
             int szelesseg = karkoto.getSzalak().length;
@@ -50,16 +50,19 @@ public class HaloPanel extends JPanel {
         
         Color c = g.getColor();
         
+        // függőleges vonalak (színes és fekete egyaránt)
         for (int i = 0; i < getW(); i++) {
-            g.setColor(szalak[i].getSzin());
+            g.setColor(karkoto.getKezdoSzalak()[i].getSzin());
             g.drawLine(keret + i * tav, keret - 2 * tav, keret + i * tav, keret - tav);
             g.setColor(c);
             g.drawLine(keret + i * tav, keret, keret + i * tav, keret + (getH() + 1 ) * tav);
         }
+        // vízszintes vonalak
         for (int i = 0; i <= getH(); i++) {
             g.drawLine(keret, keret + i * tav, keret + (getW()-1) * tav, keret + i * tav);
         }
         
+        // négyzetek
         if ( karkoto.getSorok() != null ) {
             for (int i = 0; i < karkoto.getSorok().size(); i++) {
                 Sor sor = karkoto.getSorok().get(i);
@@ -67,11 +70,12 @@ public class HaloPanel extends JPanel {
                 int a = (csomok.length + 1) % 2;
                 
                 for (int j = 0; j < csomok.length; j++) {
-                    g.setColor(csomok[j].getSzin());
+                    Color color = csomok[j].getSzin();
+                    g.setColor(color);
                     int x = keret + 1 + (a + j * 2) * tav;
                     int y = keret + 1 + i * tav;
                     g.fillRect(x, y, tav-1, tav-1);
-                    g.drawImage(getCsomoRajz(csomok[j]), x-1, y-1, this);
+                    g.drawImage(getCsomoRajz(csomok[j], color), x-1, y-1, this);
                 }
             }
         }
@@ -83,10 +87,14 @@ public class HaloPanel extends JPanel {
 //        
 //    }
     
-    private static BufferedImage getCsomoRajz(Csomo csomo) {
+    private static BufferedImage getCsomoRajz(Csomo csomo, Color hatter) {
         BufferedImage img = new BufferedImage(tav, tav, BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.getGraphics();
-        g.setColor(Color.black);
+        if ((hatter.getRed() * 0.25 + hatter.getGreen() * 0.65 + hatter.getBlue() * 0.1) / 255 > 0.25) {
+            g.setColor(Color.black);
+        } else {
+            g.setColor(Color.white);
+        }
         
         if ( csomo.getClass() == PlusPlus.class ) {
             int x = (int)(tav/2);
@@ -129,10 +137,29 @@ public class HaloPanel extends JPanel {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println(e.getX() + "x" + e.getY());
-            getPozicio(e.getPoint());
+            CsomoPozicio csp = getPozicio(e.getPoint());
+            if (csp.csomo > -1 && csp.sor > -1) {
+                CsomozottKarkoto.getKarkoto().setCsomo(csp.sor, csp.csomo, 
+                        getNextCsomo(CsomozottKarkoto.getKarkoto().getCsomo(csp.sor, csp.csomo).getClass()));
+            }
         }
         
+    }
+    
+    private Class<? extends Csomo> getNextCsomo(Class<? extends Csomo> csomo) {
+        if (csomo == UresCsomo.class) {
+            return PlusPlus.class;
+        } else if (csomo == PlusPlus.class) {
+            return PlusMinus.class;
+        } else if (csomo == PlusMinus.class) {
+            return MinusMinus.class;
+        } else if (csomo == MinusMinus.class) {
+            return MinusPlus.class;
+        } else if (csomo == MinusPlus.class) {
+            return UresCsomo.class;
+        } else {
+            return null;
+        }
     }
     
     private CsomoPozicio getPozicio(Point p) {
@@ -145,15 +172,21 @@ public class HaloPanel extends JPanel {
         
         public CsomoPozicio(int x, int y) {
             sor = (y - keret - 1) / tav;
-            
-            System.out.println("sor: " + sor);
+            if (sor < 0 || sor >= CsomozottKarkoto.getKarkoto().getSorok().size()) {
+                sor = -1;
+            }
             
             int negyzet = (x - keret - 1) / tav;
             int kimarado = CsomozottKarkoto.getKarkoto().getSor(sor).getKimaradoSzal();
             
-            csomo = (negyzet - kimarado + 1) / 2;
-            
-            System.out.println("csomo: " + negyzet);
+            if ((negyzet + kimarado) % 2 == 0) {
+                csomo = (negyzet - kimarado + 1) / 2;
+            } else {
+                csomo = -1;
+            }
+            if (sor < 0 || csomo < 0 || csomo >= CsomozottKarkoto.getKarkoto().getSor(sor).getCsomok().length) {
+                csomo = -1;
+            }
         }
     }
 }

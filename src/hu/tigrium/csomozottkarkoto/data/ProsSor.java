@@ -20,12 +20,12 @@ public class ProsSor extends Sor {
         csomok = new Csomo[be.length / 2];
     }
 
-    @Override
-    public void general() {
-        super.general();
-        if (be.length % 2 == 1) {
-            ki[be.length-1] = be[be.length-1];
-        }
-    }
+//    @Override
+//    public void general() {
+//        super.general();
+//        if (be.length % 2 == 1) {
+//            ki[be.length-1] = be[be.length-1];
+//        }
+//    }
     
 }

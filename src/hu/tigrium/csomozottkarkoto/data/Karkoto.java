@@ -6,7 +6,6 @@ package hu.tigrium.csomozottkarkoto.data;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  *
@@ -23,6 +22,7 @@ public class Karkoto {
 //        if ( n % 2 == 0 ) {
             this.n = n;
             szalak = new Szal[n];
+            kezdoSzalak = szalak;
 //        } else {
 //            throw new RuntimeException("Páros számú szálnak kell lenni.");
 //        }
@@ -62,7 +62,7 @@ public class Karkoto {
         
         for (int i = 0; i < n; i++) {
             if ( szalak[i] == null ) {
-                szalak[i] = new Szal(i+"", new Color(0,0,0,0));
+                szalak[i] = new Szal(i + "", new Color(0, 0, 0, 0));
             }
         }
         
@@ -103,6 +103,15 @@ public class Karkoto {
         return kezdoSzalak;
     }
     
+    public Csomo getCsomo(int sor, int csomo) {
+        return getSor(sor).getCsomok()[csomo];
+    }
+    
+    public void setCsomo(int sor, int csomo, Class<? extends Csomo> csomoClass) {
+        getSor(sor).addCsomo(csomo, csomoClass);
+        update(sor);
+    }
+    
 //    public void setSzalak(int szalak) {
 //        n = szalak;
 //        kezdoSzalak = new Szal[szalak];
@@ -111,7 +120,6 @@ public class Karkoto {
 //    }
     
     public Szal getSzal(int index) {
-        System.out.println(Arrays.toString(getSzalak()));
         return getSzalak()[index];
     }
 
@@ -121,6 +129,21 @@ public class Karkoto {
 
     public void setParos(boolean paros) {
         this.paros = paros;
+    }
+    
+    public void setSzalSzin(int index, Color szin) {
+        getSzal(index).setSzin(szin);
+        kezdoSzalak[index].setSzin(szin);
+        update(index);
+    }
+    
+    public void update(int kezdoIndex) {
+        if (kezdoIndex == 0) {
+            getSor(0).update(kezdoSzalak);
+        }
+        for(int i = Math.max(1, kezdoIndex); i < getSorok().size(); i++) {
+            getSor(i).update(getSor(i-1).getKi());
+        }
     }
 
     @Override

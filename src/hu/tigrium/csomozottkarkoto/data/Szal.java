@@ -11,7 +11,7 @@ import java.awt.Color;
  * @author Kata
  */
 public class Szal {
-    public final String id;
+    public String id;
     private Color szin;
 
     public Szal(String id, Color szin) {
@@ -25,6 +25,14 @@ public class Szal {
 
     public void setSzin(Color szin) {
         this.szin = szin;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

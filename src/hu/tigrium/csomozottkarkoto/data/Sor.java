@@ -6,6 +6,7 @@ package hu.tigrium.csomozottkarkoto.data;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 /**
  *
@@ -43,6 +44,9 @@ public abstract class Sor {
     
     public void general() {
         ki = new Szal[be.length];
+        for(int i = 0; i < csomok.length; i++) {
+            csomok[i].csomoz();
+        }
         for (int i = 0; i < csomok.length; i++) {
             if ( csomok[i] == null ) { 
                 ki = null;
@@ -54,6 +58,17 @@ public abstract class Sor {
         }
         for (int i = 0; i < be.length; i++) {
             if (ki[i] == null) ki[i] = be[i];
+        }
+    }
+    
+    public void update(Szal[] be) {
+        if (this.be.length == be.length) {
+            this.be = be;
+            System.out.print(Arrays.toString(ki) + " ");
+            general();
+            System.out.println(Arrays.toString(ki));
+        } else {
+            throw new RuntimeException("Rossz szál darabszám!");
         }
     }
 
